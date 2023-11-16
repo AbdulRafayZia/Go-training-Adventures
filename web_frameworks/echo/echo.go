@@ -13,17 +13,17 @@ type User struct {
 
 func main() {
     e := echo.New()
-    e.GET("/", func(c echo.Context) error {
-        return c.String(http.StatusOK, "Hello, World!")
+    e.GET("/msg/:msg", func (c echo.Context) error {
+        // User ID from path `users/:id`
+        id := c.Param("msg")
+        return c.String(http.StatusOK,"msg  :"+ id)
     })
+    // e.GET("/users/:id", getUser)
+
     e.Logger.Fatal(e.Start(":1323"))
-    e.POST("/users", func(c echo.Context) error {
-        u := new(User)
-        if err := c.Bind(u); err != nil {
-            return err
-        }
-        return c.JSON(http.StatusCreated, u)
-        // or
-        // return c.XML(http.StatusCreated, u)
-    })
+  
+
+    // $ curl -d "name=Joe Smith" -d "email=joe@labstack.com" http://localhost:1323/save
+// => name:Joe Smith, email:joe@labstack.com
+ 
 }
